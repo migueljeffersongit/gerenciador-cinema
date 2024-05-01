@@ -42,4 +42,4 @@ docker-compose up --build
 A API foi projetada para aderir estritamente aos códigos de status HTTP apropriados, proporcionando uma resposta consistente e previsível para os consumidores da API.
 
 ## Documentação
-Acesse a documentação interativa da API e teste os endpoints utilizando Swagger UI, que pode ser acessado navegando até http://localhost:<porta>/swagger após iniciar o aplicativo.
+Acesse a documentação interativa da API e teste os endpoints utilizando Swagger UI, que pode ser acessado navegando até http://localhost:porta/swagger após iniciar o aplicativo.
