@@ -40,9 +40,17 @@ public class ExceptionHandlingMiddleware
         var result = JsonSerializer.Serialize(new
         {
             error = exception.Message,
-            stackTrace = exception.StackTrace
+            stackTrace = SimplifyStackTrace(exception)
         });
 
         await response.WriteAsync(result);
+    }
+    
+    private static string SimplifyStackTrace(Exception exception)
+    {
+        return string.Join("\n", exception.StackTrace
+            .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
+            .Where(line => line.Contains("GerenciadorCinema"))
+            .Select(line => line.Trim()));
     }
 }
