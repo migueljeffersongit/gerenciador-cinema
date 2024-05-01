@@ -10,34 +10,29 @@ public class Sala : BaseEntity
 
     public Sala() { }
 
-    public Sala(Guid id) : base(id) { }
+    public Sala(Guid id) : base(id) {  }
 
-    public void AtualizarDados(string numeroSala, string descricao)
+    public Sala(string numeroSala, string descricao)
     {
+        ValidarDados(numeroSala, descricao);        
         NumeroSala = numeroSala;
         Descricao = descricao;
     }
 
-    public bool AdicionarFilme(Filme filme)
+    public void AtualizarDados(string numeroSala, string descricao)
     {
-        if (filme == null)
-            throw new ArgumentException("Filme inválido.");
-
-        if (!Filmes.Any(f => f.Nome.Equals(filme.Nome, StringComparison.OrdinalIgnoreCase) || f.Id == filme.Id))
-        {
-            Filmes.Add(filme);
-            return true;
-        }
-        return false;
+        ValidarDados(numeroSala, descricao);
+        NumeroSala = numeroSala;
+        Descricao = descricao;
     }
 
-
-    public bool RemoverFilme(Filme filme)
+    private void ValidarDados(string numeroSala, string descricao)
     {
-        if (filme == null)
-            throw new ArgumentNullException(nameof(filme), "O filme fornecido é nulo.");
+        if (string.IsNullOrWhiteSpace(numeroSala) || numeroSala.Length > 50)
+            throw new ArgumentException(nameof(numeroSala), "Número da sala inválido.");
 
-        bool removido = Filmes.Remove(filme);
-        return removido;
+        if (string.IsNullOrWhiteSpace(descricao) || descricao.Length > 250)
+            throw new ArgumentException(nameof(descricao), "Descrição inválida.");
     }
+    
 }

@@ -28,7 +28,7 @@ public class SalaQuery : ISalaQuery
                 NumeroSala = x.NumeroSala,
                 Descricao = x.Descricao,
 
-                Filmes = new List<FilmeDto>(x.Filmes.Select(f => new FilmeDto
+                Filmes = new List<FilmeResponseDto>(x.Filmes.Select(f => new FilmeResponseDto
                 {
                     Id = f.Id,
                     Nome = f.Nome,
@@ -66,7 +66,7 @@ public class SalaQuery : ISalaQuery
                 NumeroSala = x.NumeroSala,
                 Descricao = x.Descricao,
 
-                Filmes = new List<FilmeDto>(x.Filmes.Select(f => new FilmeDto
+                Filmes = new List<FilmeResponseDto>(x.Filmes.Select(f => new FilmeResponseDto
                 {
                     Id = f.Id,
                     Nome = f.Nome,
