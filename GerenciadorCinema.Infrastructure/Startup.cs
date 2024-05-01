@@ -1,6 +1,10 @@
-﻿using GerenciadorCinema.Domain.Interfaces;
+﻿using GerenciadorCinema.Application.Interfaces.Queries;
+using GerenciadorCinema.Application.Interfaces.Services;
+using GerenciadorCinema.Application.Services;
+using GerenciadorCinema.Domain.Interfaces;
 using GerenciadorCinema.Domain.Interfaces.UoW;
 using GerenciadorCinema.Infrastructure.Database.Contexts;
+using GerenciadorCinema.Infrastructure.Queries;
 using GerenciadorCinema.Infrastructure.Repositories;
 using GerenciadorCinema.Infrastructure.Repositories.UoW;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +27,12 @@ public static class Startup
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IFilmeRepository, FilmeRepository>();
         services.AddScoped<ISalaRepository, SalaRepository>();
+
+        services.AddScoped<IFilmeQuery, FilmeQuery>();
+        services.AddScoped<ISalaQuery, SalaQuery>();
+
+        services.AddScoped<IFilmeService, FilmeService>();
+        services.AddScoped<ISalaService, SalaService>();
 
         return services;
     }

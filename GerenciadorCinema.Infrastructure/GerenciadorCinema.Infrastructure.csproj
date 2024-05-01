@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GerenciadorCinema.Domain\GerenciadorCinema.Domain.csproj" />
+    <ProjectReference Include="..\GerenciadorCinema.Application\GerenciadorCinema.Application.csproj" />
   </ItemGroup>
 
 </Project>
