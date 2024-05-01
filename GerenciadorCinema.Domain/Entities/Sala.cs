@@ -14,9 +14,7 @@ public class Sala : BaseEntity
 
     public Sala(string numeroSala, string descricao)
     {
-        ValidarDados(numeroSala, descricao);        
-        NumeroSala = numeroSala;
-        Descricao = descricao;
+        AtualizarDados(numeroSala, descricao);
     }
 
     public void AtualizarDados(string numeroSala, string descricao)
@@ -28,11 +26,17 @@ public class Sala : BaseEntity
 
     private void ValidarDados(string numeroSala, string descricao)
     {
-        if (string.IsNullOrWhiteSpace(numeroSala) || numeroSala.Length > 50)
-            throw new ArgumentException(nameof(numeroSala), "Número da sala inválido.");
+        if (string.IsNullOrWhiteSpace(numeroSala))
+            throw new ArgumentException("Número da sala é obrigatório.", nameof(numeroSala));
 
-        if (string.IsNullOrWhiteSpace(descricao) || descricao.Length > 250)
-            throw new ArgumentException(nameof(descricao), "Descrição inválida.");
+        if (numeroSala.Length > 50)
+            throw new ArgumentException("Número da sala não pode exceder 50 caracteres.", nameof(numeroSala));
+
+        if (string.IsNullOrWhiteSpace(descricao))
+            throw new ArgumentException("Descrição é obrigatória.", nameof(descricao));
+
+        if (descricao.Length > 250)
+            throw new ArgumentException("Descrição não pode exceder 250 caracteres.", nameof(descricao));
     }
     
 }
