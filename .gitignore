@@ -396,3 +396,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+.DS_Store
+.idea/.idea.GerenciadorCinema/.idea/.name
+.idea/.idea.GerenciadorCinema/.idea/encodings.xml
+.idea/.idea.GerenciadorCinema/.idea/indexLayout.xml
+.idea/.idea.GerenciadorCinema/.idea/vcs.xml
