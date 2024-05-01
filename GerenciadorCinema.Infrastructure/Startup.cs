@@ -1,4 +1,8 @@
-﻿using GerenciadorCinema.Infrastructure.Database.Contexts;
+﻿using GerenciadorCinema.Domain.Interfaces;
+using GerenciadorCinema.Domain.Interfaces.UoW;
+using GerenciadorCinema.Infrastructure.Database.Contexts;
+using GerenciadorCinema.Infrastructure.Repositories;
+using GerenciadorCinema.Infrastructure.Repositories.UoW;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,10 +13,17 @@ public static class Startup
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        return services.AddDbContext<ApplicationDbContext>(options =>
+
+        services.AddDbContext<ApplicationDbContext>(options =>
         {
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         });
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IFilmeRepository, FilmeRepository>();
+        services.AddScoped<ISalaRepository, SalaRepository>();
+
+        return services;
     }
 }
