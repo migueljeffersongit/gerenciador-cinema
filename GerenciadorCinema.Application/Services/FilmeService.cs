@@ -35,6 +35,7 @@ public class FilmeService : IFilmeService
     public async Task<FilmeResponseDto> AddAsync(AddFilmeDto filmeDto, CancellationToken cancellationToken)
     {
         var filme = new Filme(filmeDto.Nome, filmeDto.Diretor, (TimeSpan)filmeDto.Duracao, filmeDto.SalaId);
+        await ExisteSalaAsync(filmeDto.SalaId, cancellationToken);
         await _filmeRepository.AddAsync(filme);
         await _unitOfWork.CommitAsync(cancellationToken);
         return new FilmeResponseDto
@@ -53,6 +54,8 @@ public class FilmeService : IFilmeService
 
         if (filme == null)
             throw new NotFoundException("Filme não encontrado");
+
+        await ExisteSalaAsync(filmeDto.SalaId, cancellationToken);
 
         filme.AtualizarDados(filmeDto.Nome, filmeDto.Diretor, (TimeSpan)filmeDto.Duracao, filmeDto.SalaId);
         await _filmeRepository.UpdateAsync(filme);
@@ -81,24 +84,29 @@ public class FilmeService : IFilmeService
     }
 
     public async Task<bool> UpdateSalaIdAsync(Guid id, Guid? salaId, CancellationToken cancellationToken)
-    {   
+    {
         var filme = await _filmeRepository.GetByIdAsync(id, cancellationToken);
 
         if (filme == null)
             throw new NotFoundException("Filme não encontrado");
 
-        if(salaId != default && salaId.Value != Guid.Empty)
+        await ExisteSalaAsync(salaId, cancellationToken);
+
+        filme.AlterarSala(salaId);
+        await _filmeRepository.UpdateAsync(filme);
+        await _unitOfWork.CommitAsync(cancellationToken);
+
+        return true;
+    }
+
+    private async Task ExisteSalaAsync(Guid? salaId, CancellationToken cancellationToken)
+    {
+        if (salaId != default && salaId.Value != Guid.Empty)
         {
             var existeSala = await _filmeQuery.ExisteSala(salaId.Value, cancellationToken);
 
-            if (!existeSala)            
-                throw new NotFoundException("Sala não encontrada");            
+            if (!existeSala)
+                throw new NotFoundException("Sala não encontrada");
         }
-        
-        filme.AlterarSala(salaId);        
-        await _filmeRepository.UpdateAsync(filme);
-        await _unitOfWork.CommitAsync(cancellationToken);
-        
-        return true;
     }
 }

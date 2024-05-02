@@ -19,30 +19,49 @@ public class SalasController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<PaginationResponse<SalaResponseDto>> GetAllSalas([FromQuery] GetListaSalaQueryDto request)
     {
         return await _salaService.GetListAsync(request, new CancellationToken());
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<SalaResponseDto> GetSalaById(Guid id)
     {
         return await _salaService.GetByIdAsync(id, new CancellationToken());
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]    
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<SalaResponseDto> CreateSala([FromBody] AddSalaDto sala)
     {
        return await _salaService.AddAsync(sala, new CancellationToken());
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<SalaResponseDto> UpdateSala(Guid id, [FromBody] UpdateSalaDto sala)
     {
        return await _salaService.UpdateAsync(id, sala, new CancellationToken());
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteSala(Guid id)
     {
         await _salaService.DeleteAsync(id, new CancellationToken());
