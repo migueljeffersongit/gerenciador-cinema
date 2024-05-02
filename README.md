@@ -33,7 +33,7 @@ Implementação de testes unitários cobrindo:
 Clonar o Repositório
 
 ```
-$ git clone https://github.com/migueljeffersongit/gerenciador-cinema.git
+git clone https://github.com/migueljeffersongit/gerenciador-cinema.git
 ```
 
 e acessar o diretório gerenciador-cinema
@@ -41,13 +41,13 @@ e acessar o diretório gerenciador-cinema
 #### Executar com Docker Compose
 
 ```
-$ docker-compose up -d --build
+docker-compose up -d --build
 ```
 
 #### Parar com Docker Compose
 
 ```
-$ docker-compose down -v
+docker-compose down -v
 ```
 
 ## Boas Práticas
