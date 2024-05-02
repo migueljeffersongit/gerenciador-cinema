@@ -1,4 +1,4 @@
-# Gerenciador Cinema API
+# Gerenciador Cinema API 🎬🍿🥤
 [![.NET](https://github.com/migueljeffersongit/gerenciador-cinema/actions/workflows/dotnet.yml/badge.svg)](https://github.com/migueljeffersongit/gerenciador-cinema/actions/workflows/dotnet.yml)
 ## Descrição
 Este projeto implementa uma API RESTful usando .NET 7, projetada para gerenciar a exibição de filmes em um cinema. A API utiliza uma arquitetura em camadas e é capaz de manipular informações de salas e filmes, onde uma sala pode conter vários filmes, e um filme pode existir sem estar associado a uma sala específica.
@@ -91,7 +91,7 @@ A duração do filme deve ser passada no formato ISO 8601, que é representado p
 ```
 
 ```bash
-curl -X POST "http://localhost:5000/api/filmes" -H  "accept: */*" -H  "Content-Type: application/json" -d "{  \"nome\": \"O Senhor dos Anéis: O Retorno do Rei\",  \"diretor\": \"Peter Jackson\",  \"duracao\": \"PT3H21M\",  \"salaId\": \"9401bbb8-9499-4a9e-9475-2e61f16cb336\"}"
+curl -X POST "http://localhost:8000/api/filmes" -H  "accept: */*" -H  "Content-Type: application/json" -d "{  \"nome\": \"O Senhor dos Anéis: O Retorno do Rei\",  \"diretor\": \"Peter Jackson\",  \"duracao\": \"PT3H21M\",  \"salaId\": \"9401bbb8-9499-4a9e-9475-2e61f16cb336\"}"
 ```
 Estes exemplos proporcionam informações detalhadas sobre como utilizar os endpoints da API para criar recursos importantes no sistema de gerenciamento de cinema. Eles são úteis para desenvolvedores integrarem ou testarem a API rapidamente.
 
