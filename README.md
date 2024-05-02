@@ -50,6 +50,47 @@ docker-compose up -d --build
 docker-compose down -v
 ```
 
+## Exemplos de Uso da API
+
+### Criar uma Sala
+
+Para criar uma nova sala no sistema, você deve enviar uma solicitação POST para o endpoint `/api/salas`. Aqui está um exemplo de como fazer essa solicitação com os dados da sala em formato JSON:
+
+**Endpoint:**
+POST /api/salas
+
+**Exemplo de Corpo da Requisição:**
+```json
+{
+  "numeroSala": "Sala 12",
+  "descricao": "Sala de projeção 3D com capacidade para 200 espectadores, som surround e poltronas reclináveis."
+}
+```
+
+```bash
+curl -X POST "http://localhost:8000/api/salas" -H  "accept: */*" -H  "Content-Type: application/json" -d "{  \"numeroSala\": \"Sala 12\",  \"descricao\": \"Sala de projeção 3D com capacidade para 200 espectadores, som surround e poltronas reclináveis.\"}"
+```
+### Criar um Filme
+
+Para adicionar um novo filme ao sistema, associando-o a uma sala existente, envie uma solicitação POST para o endpoint /api/filmes. Inclua os dados do filme em formato JSON como mostrado abaixo:
+
+**Endpoint:**
+POST /api/filmes
+
+```json
+{
+  "nome": "O Senhor dos Anéis: O Retorno do Rei",
+  "diretor": "Peter Jackson",
+  "duracao": "PT3H21M",
+  "salaId": "9401bbb8-9499-4a9e-9475-2e61f16cb336" //  ID Sala 2 criado inicialmente no migrations ou substitua por um id criado
+}
+```
+
+```bash
+curl -X POST "http://localhost:5000/api/filmes" -H  "accept: */*" -H  "Content-Type: application/json" -d "{  \"nome\": \"O Senhor dos Anéis: O Retorno do Rei\",  \"diretor\": \"Peter Jackson\",  \"duracao\": \"PT3H21M\",  \"salaId\": \"9401bbb8-9499-4a9e-9475-2e61f16cb336\"}"
+```
+Estes exemplos proporcionam informações detalhadas sobre como utilizar os endpoints da API para criar recursos importantes no sistema de gerenciamento de cinema. Eles são úteis para desenvolvedores integrarem ou testarem a API rapidamente.
+
 ## Boas Práticas
 A API foi projetada para aderir estritamente aos códigos de status HTTP apropriados, proporcionando uma resposta consistente e previsível para os consumidores da API.
 
