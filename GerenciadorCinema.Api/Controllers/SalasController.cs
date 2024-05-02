@@ -1,4 +1,5 @@
-﻿using GerenciadorCinema.Application.Common;
+﻿using GerenciadorCinema.Api.Filters;
+using GerenciadorCinema.Application.Common;
 using GerenciadorCinema.Application.DTOs.Salas;
 using GerenciadorCinema.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ namespace GerenciadorCinema.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[NullResponseFilter]
 public class SalasController : ControllerBase
 {
     private readonly ISalaService _salaService;

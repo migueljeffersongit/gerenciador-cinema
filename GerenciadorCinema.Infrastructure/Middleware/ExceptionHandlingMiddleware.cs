@@ -1,5 +1,6 @@
 using System.Net;
 using System.Text.Json;
+using GerenciadorCinema.Application.Exceptions;
 using Microsoft.AspNetCore.Http;
 
 namespace GerenciadorCinema.Infrastructure.Middleware;
@@ -32,8 +33,9 @@ public class ExceptionHandlingMiddleware
 
         response.StatusCode = exception switch
         {
-            ArgumentNullException => (int)HttpStatusCode.BadRequest,
+            ArgumentNullException => (int)HttpStatusCode.BadRequest, //400
             ArgumentException => (int)HttpStatusCode.BadRequest, //400
+            NotFoundException => (int)HttpStatusCode.NotFound, //404
             _ => (int)HttpStatusCode.InternalServerError // 500
         };
 

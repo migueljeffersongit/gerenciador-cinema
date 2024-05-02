@@ -1,5 +1,6 @@
 ﻿using GerenciadorCinema.Application.Common;
 using GerenciadorCinema.Application.DTOs.Salas;
+using GerenciadorCinema.Application.Exceptions;
 using GerenciadorCinema.Application.Interfaces.Queries;
 using GerenciadorCinema.Application.Interfaces.Services;
 using GerenciadorCinema.Domain.Entities;
@@ -49,7 +50,7 @@ public class SalaService : ISalaService
         var sala = await _salaRepository.GetByIdAsync(id, cancellationToken);
 
         if (sala == null)
-            throw new Exception("Sala não encontrada");
+            throw new NotFoundException("Sala não encontrada");
 
         sala.AtualizarDados(salaDto.NumeroSala, salaDto.Descricao);
         await _salaRepository.UpdateAsync(sala);
@@ -68,7 +69,7 @@ public class SalaService : ISalaService
         var sala = await _salaRepository.GetByIdAsync(id, cancellationToken);
 
         if (sala == null)
-            throw new Exception("Sala não encontrada");
+            throw new NotFoundException("Sala não encontrada");
 
         await _salaRepository.DeleteAsync(sala);
         await _unitOfWork.CommitAsync(cancellationToken);

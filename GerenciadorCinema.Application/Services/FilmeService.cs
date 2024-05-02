@@ -1,6 +1,7 @@
 ﻿using GerenciadorCinema.Application.Common;
 using GerenciadorCinema.Application.DTOs.Filmes;
 using GerenciadorCinema.Application.DTOs.Salas;
+using GerenciadorCinema.Application.Exceptions;
 using GerenciadorCinema.Application.Interfaces.Queries;
 using GerenciadorCinema.Application.Interfaces.Services;
 using GerenciadorCinema.Domain.Entities;
@@ -52,7 +53,7 @@ public class FilmeService : IFilmeService
         var filme = await _filmeRepository.GetByIdAsync(id, cancellationToken);
 
         if (filme == null)
-            throw new Exception("Filme não encontrado");
+            throw new NotFoundException("Filme não encontrado");
 
         filme.AtualizarDados(filmeDto.Nome, filmeDto.Diretor, (TimeSpan)filmeDto.Duracao, filmeDto.SalaId);
         await _filmeRepository.UpdateAsync(filme);
@@ -73,7 +74,7 @@ public class FilmeService : IFilmeService
         var filme = await _filmeRepository.GetByIdAsync(id, cancellationToken);
 
         if (filme == null)
-            throw new Exception("Filme não encontrado");
+            throw new NotFoundException("Filme não encontrado");
 
         await _filmeRepository.DeleteAsync(filme);
         await _unitOfWork.CommitAsync(cancellationToken);
