@@ -77,6 +77,10 @@ Para adicionar um novo filme ao sistema, associando-o a uma sala existente, envi
 **Endpoint:**
 POST /api/filmes
 
+**Formato da Duração (`duracao`):**
+A duração do filme deve ser passada no formato ISO 8601, que é representado pela letra `P`, seguida por um período `T`, as horas (`H`), os minutos (`M`) e opcionalmente os segundos (`S`). Por exemplo, `PT3H21M` representa 3 horas e 21 minutos.
+
+**Exemplo de Corpo da Requisição:**
 ```json
 {
   "nome": "O Senhor dos Anéis: O Retorno do Rei",
