@@ -1,5 +1,5 @@
 # Gerenciador Cinema API
-
+[![.NET](https://github.com/migueljeffersongit/gerenciador-cinema/actions/workflows/dotnet.yml/badge.svg)](https://github.com/migueljeffersongit/gerenciador-cinema/actions/workflows/dotnet.yml)
 ## Descrição
 Este projeto implementa uma API RESTful usando .NET 7, projetada para gerenciar a exibição de filmes em um cinema. A API utiliza uma arquitetura em camadas e é capaz de manipular informações de salas e filmes, onde uma sala pode conter vários filmes, e um filme pode existir sem estar associado a uma sala específica.
 
