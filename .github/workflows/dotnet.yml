@@ -16,6 +16,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Set locale to Portuguese (Brazil)
+      run: |
+        sudo locale-gen pt_BR.UTF-8
+        sudo update-locale LANG=pt_BR.UTF-8
+      env:
+        LANG: pt_BR.UTF-8
+        LC_ALL: pt_BR.UTF-8
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
