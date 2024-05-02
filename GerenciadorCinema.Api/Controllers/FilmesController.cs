@@ -56,7 +56,7 @@ public class FilmesController : ControllerBase
         var resultado = await _filmeService.UpdateSalaIdAsync(id, novaSalaId, new CancellationToken());
         if (resultado)
             return Ok();
-        return BadRequest("Não foi possível alterar a sala do filme.");
+        return BadRequest("Nao foi possivel alterar a sala do filme.");
     }
 
 }

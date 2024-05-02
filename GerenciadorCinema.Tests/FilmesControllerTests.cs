@@ -1,10 +1,8 @@
 using GerenciadorCinema.Api.Controllers;
 using GerenciadorCinema.Application.Common;
 using GerenciadorCinema.Application.DTOs.Filmes;
-using GerenciadorCinema.Application.Exceptions;
 using GerenciadorCinema.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace GerenciadorCinema.Tests;
 
@@ -173,7 +171,7 @@ public class FilmesControllerTests
 
         Assert.IsType<BadRequestObjectResult>(result);
         var badRequestResult = result as BadRequestObjectResult;
-        Assert.Equal("Não foi possível alterar a sala do filme.", badRequestResult.Value);
+        Assert.Equal("Nao foi possivel alterar a sala do filme.", badRequestResult.Value);
     }
 
 }
