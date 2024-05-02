@@ -1,6 +1,5 @@
 ﻿using GerenciadorCinema.Application.Common;
 using GerenciadorCinema.Application.DTOs.Filmes;
-using GerenciadorCinema.Application.DTOs.Salas;
 using GerenciadorCinema.Application.Exceptions;
 using GerenciadorCinema.Application.Interfaces.Queries;
 using GerenciadorCinema.Application.Interfaces.Services;
@@ -44,7 +43,7 @@ public class FilmeService : IFilmeService
             Nome = filme.Nome,
             Diretor = filme.Diretor,
             Duracao = filme.Duracao,
-            SalaId = filme.SalaId,            
+            SalaId = filme.SalaId,
         };
     }
 
@@ -64,7 +63,7 @@ public class FilmeService : IFilmeService
             Nome = filme.Nome,
             Diretor = filme.Diretor,
             Duracao = filme.Duracao,
-            SalaId = filme.SalaId            
+            SalaId = filme.SalaId
         };
 
     }
@@ -79,5 +78,27 @@ public class FilmeService : IFilmeService
         await _filmeRepository.DeleteAsync(filme);
         await _unitOfWork.CommitAsync(cancellationToken);
 
+    }
+
+    public async Task<bool> UpdateSalaIdAsync(Guid id, Guid? salaId, CancellationToken cancellationToken)
+    {   
+        var filme = await _filmeRepository.GetByIdAsync(id, cancellationToken);
+
+        if (filme == null)
+            throw new NotFoundException("Filme não encontrado");
+
+        if(salaId != default && salaId.Value != Guid.Empty)
+        {
+            var existeSala = await _filmeQuery.ExisteSala(salaId.Value, cancellationToken);
+
+            if (!existeSala)            
+                throw new NotFoundException("Sala não encontrada");            
+        }
+        
+        filme.AlterarSala(salaId);        
+        await _filmeRepository.UpdateAsync(filme);
+        await _unitOfWork.CommitAsync(cancellationToken);
+        
+        return true;
     }
 }

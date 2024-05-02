@@ -1,6 +1,7 @@
 ﻿using GerenciadorCinema.Api.Filters;
 using GerenciadorCinema.Application.Common;
 using GerenciadorCinema.Application.DTOs.Filmes;
+using GerenciadorCinema.Application.Exceptions;
 using GerenciadorCinema.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,4 +49,14 @@ public class FilmesController : ControllerBase
         await _filmeService.DeleteAsync(id, new CancellationToken());
         return Ok();
     }
+
+    [HttpPatch("{id}/sala")]
+    public async Task<IActionResult> UpdateSalaId(Guid id, [FromBody] Guid? novaSalaId)
+    {
+        var resultado = await _filmeService.UpdateSalaIdAsync(id, novaSalaId, new CancellationToken());
+        if (resultado)
+            return Ok();
+        return BadRequest("Não foi possível alterar a sala do filme.");
+    }
+
 }

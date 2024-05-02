@@ -34,12 +34,12 @@ public class Filme : BaseEntity
             throw new ArgumentException("O nome do filme é obrigatório e não pode ser vazio.");
         if (nome.Length > 100)
             throw new ArgumentException("O nome do filme não pode exceder 100 caracteres.");
-        
+
         if (string.IsNullOrWhiteSpace(diretor))
             throw new ArgumentException("O nome do diretor é obrigatório e não pode ser vazio.");
         if (diretor.Length > 100)
             throw new ArgumentException("O nome do diretor não pode exceder 100 caracteres.");
-        
+
         if (duracao <= TimeSpan.Zero)
             throw new ArgumentException("A duração do filme deve ser maior que zero.");
         if (duracao.TotalMinutes > 300)
@@ -53,7 +53,7 @@ public class Filme : BaseEntity
     {
         if (salaId != null && salaId == Guid.Empty)
             throw new ArgumentException("Se fornecido, o ID da sala deve ser um GUID válido.");
-        
+
         SalaId = salaId;
     }
 

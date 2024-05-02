@@ -10,4 +10,6 @@ public interface IFilmeService
     Task<FilmeResponseDto> AddAsync(AddFilmeDto filmeDto, CancellationToken cancellationToken);
     Task<FilmeResponseDto> UpdateAsync(Guid id, UpdateFilmeDto filmeDto, CancellationToken cancellationToken);
     Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+    Task<bool> UpdateSalaIdAsync(Guid id, Guid? salaId, CancellationToken cancellationToken);
+
 }

@@ -10,7 +10,7 @@ public class Sala : BaseEntity
 
     public Sala() { }
 
-    public Sala(Guid id) : base(id) {  }
+    public Sala(Guid id) : base(id) { }
 
     public Sala(string numeroSala, string descricao)
     {
@@ -38,5 +38,5 @@ public class Sala : BaseEntity
         if (descricao.Length > 250)
             throw new ArgumentException("Descrição não pode exceder 250 caracteres.", nameof(descricao));
     }
-    
+
 }
