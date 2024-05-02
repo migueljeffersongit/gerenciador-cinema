@@ -17,6 +17,11 @@ public class FilmeQuery : IFilmeQuery
         _context = context;
     }
 
+    public Task<bool> ExisteSala(Guid salaId, CancellationToken cancellationToken)
+    {
+        return _context.Salas.AnyAsync(x => x.Id == salaId, cancellationToken);
+    }
+
     public async Task<FilmeResponseDto> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var query = await _context.Filmes
