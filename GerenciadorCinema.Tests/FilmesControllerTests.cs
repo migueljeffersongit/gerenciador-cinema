@@ -1,8 +1,10 @@
 using GerenciadorCinema.Api.Controllers;
 using GerenciadorCinema.Application.Common;
 using GerenciadorCinema.Application.DTOs.Filmes;
+using GerenciadorCinema.Application.Exceptions;
 using GerenciadorCinema.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace GerenciadorCinema.Tests;
 
@@ -50,13 +52,13 @@ public class FilmesControllerTests
     public async Task ObterTodosFilmes_Retorna_RespostaPaginada()
     {
         var request = new GetListaFilmeQueryDto();
-        
+
         var expectedResponse = new PaginationResponse<FilmeResponseDto>(_filmes, _filmes.Count(), 1, _filmes.Count());
         _mockService.Setup(s => s.GetListAsync(request, It.IsAny<CancellationToken>()))
                     .ReturnsAsync(expectedResponse);
-        
+
         var result = await _controller.GetAllFilmes(request);
-        
+
         Assert.Equal(expectedResponse.Data.Count, result.Data.Count);
         Assert.Equal(expectedResponse.TotalCount, result.TotalCount);
         Assert.Equal(expectedResponse.PageSize, result.PageSize);
@@ -76,9 +78,9 @@ public class FilmesControllerTests
         };
         _mockService.Setup(s => s.GetByIdAsync(filmeId, It.IsAny<CancellationToken>()))
                     .ReturnsAsync(expectedFilme);
-        
+
         var result = await _controller.GetFilmeById(filmeId);
-        
+
         Assert.Equal(expectedFilme.Id, result.Id);
     }
 
@@ -102,9 +104,9 @@ public class FilmesControllerTests
         };
         _mockService.Setup(s => s.AddAsync(filmeDto, It.IsAny<CancellationToken>()))
                     .ReturnsAsync(expectedFilme);
-        
+
         var result = await _controller.CreateFilme(filmeDto);
-        
+
         Assert.Equal(expectedFilme, result);
     }
 
@@ -129,9 +131,9 @@ public class FilmesControllerTests
         };
         _mockService.Setup(s => s.UpdateAsync(filmeId, filmeDto, It.IsAny<CancellationToken>()))
                     .ReturnsAsync(expectedFilme);
-        
+
         var result = await _controller.UpdateFilme(filmeId, filmeDto);
-        
+
         Assert.Equal(expectedFilme, result);
     }
 
@@ -139,13 +141,39 @@ public class FilmesControllerTests
     public async Task ExcluirFilme_Retorna_ResultadoOk()
     {
         var filmeId = Guid.Parse("d9c2a815-3550-4726-bd8e-e2c5d77d8cf9");
-        
+
         _mockService.Setup(s => s.DeleteAsync(filmeId, It.IsAny<CancellationToken>()))
                     .Returns(Task.CompletedTask);
-        
+
         var result = await _controller.DeleteFilme(filmeId);
-        
+
         Assert.IsType<OkResult>(result);
+    }
+
+    [Fact]
+    public async Task AlterarSalaId_RetornoOk_WhenSuccessful()
+    {
+        var filmeId = Guid.NewGuid();
+        var novaSalaId = Guid.NewGuid();
+        _mockService.Setup(service => service.UpdateSalaIdAsync(filmeId, novaSalaId, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+
+        var result = await _controller.UpdateSalaId(filmeId, novaSalaId);
+
+        Assert.IsType<OkResult>(result);
+    }
+
+    [Fact]
+    public async Task AlterarSalaId_RetornaBadRequest_WhenFailed()
+    {
+        var filmeId = Guid.NewGuid();
+        var novaSalaId = Guid.NewGuid();
+        _mockService.Setup(service => service.UpdateSalaIdAsync(filmeId, novaSalaId, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+
+        var result = await _controller.UpdateSalaId(filmeId, novaSalaId);
+
+        Assert.IsType<BadRequestObjectResult>(result);
+        var badRequestResult = result as BadRequestObjectResult;
+        Assert.Equal("Não foi possível alterar a sala do filme.", badRequestResult.Value);
     }
 
 }

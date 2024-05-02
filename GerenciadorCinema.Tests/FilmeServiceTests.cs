@@ -6,6 +6,7 @@ using GerenciadorCinema.Domain.Interfaces;
 using GerenciadorCinema.Application.Common;
 using GerenciadorCinema.Application.Interfaces.Queries;
 using GerenciadorCinema.Domain.Interfaces.UoW;
+using GerenciadorCinema.Application.Exceptions;
 
 namespace GerenciadorCinema.Tests;
 
@@ -103,4 +104,44 @@ public class FilmeServiceTests
 
         _mockFilmeRepository.Verify(x => x.DeleteAsync(It.IsAny<Filme>(), new CancellationToken()), Times.Once());
     }
+
+    [Fact]
+    public async Task AtualizarSalaIdAsync_FilmeNaoEncontrado_ThrowsNotFoundException()
+    {
+        var filmeId = Guid.NewGuid();
+        _mockFilmeRepository.Setup(repo => repo.GetByIdAsync(filmeId, It.IsAny<CancellationToken>())).ReturnsAsync((Filme)null);
+
+        await Assert.ThrowsAsync<NotFoundException>(() => _filmeService.UpdateSalaIdAsync(filmeId, Guid.NewGuid(), new CancellationToken()));
+    }
+
+    [Fact]
+    public async Task AtualizarSalaIdAsync_SalaNaoEncontrada_ThrowsNotFoundException()
+    {
+        var filmeId = Guid.NewGuid();
+        var salaId = Guid.NewGuid();
+        var filme = new Filme("Matrix", "Wachowski", TimeSpan.FromHours(2), salaId);
+        
+    _mockFilmeRepository.Setup(repo => repo.GetByIdAsync(filmeId, It.IsAny<CancellationToken>())).ReturnsAsync(filme);
+        _mockFilmeQuery.Setup(query => query.ExisteSala(salaId, It.IsAny<CancellationToken>())).ReturnsAsync(false);
+
+        await Assert.ThrowsAsync<NotFoundException>(() => _filmeService.UpdateSalaIdAsync(filmeId, salaId, new CancellationToken()));
+    }
+
+    [Fact]
+    public async Task AtualizarSalaIdAsync_Sucesso_RetornaTrue()
+    {
+        var filmeId = Guid.NewGuid();
+        var salaId = Guid.NewGuid();
+        var filme = new Filme("Matrix", "Wachowski", TimeSpan.FromHours(2), salaId);
+
+        _mockFilmeRepository.Setup(repo => repo.GetByIdAsync(filmeId, It.IsAny<CancellationToken>())).ReturnsAsync(filme);
+        _mockFilmeQuery.Setup(query => query.ExisteSala(salaId, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+        _mockFilmeRepository.Setup(repo => repo.UpdateAsync(filme, new CancellationToken()));
+        _mockUnitOfWork.Setup(uow => uow.CommitAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+        var result = await _filmeService.UpdateSalaIdAsync(filmeId, salaId, new CancellationToken());
+
+        Assert.True(result);
+    }
+
 }
